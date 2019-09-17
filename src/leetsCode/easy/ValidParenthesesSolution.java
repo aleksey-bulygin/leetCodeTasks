@@ -37,6 +37,25 @@ package leetsCode.easy;
  */
 public class ValidParenthesesSolution {
     public static void main(String[] args) {
+        System.out.println(isValid("{[]}"));
+    }
 
+    public static boolean isValid(String s) {
+        if (s.isEmpty())
+            return true;
+
+        while (!s.isEmpty()) {
+            if ( !(s.contains("()") || s.contains("[]") || s.contains("{}")) )
+                return false;
+
+            if (s.contains("()"))
+                s = s.replaceFirst("(\\(\\))", "");
+            if (s.contains("[]"))
+                s = s.replaceFirst("(\\[\\])", "");
+            if (s.contains("{}"))
+                s = s.replaceFirst("(\\{\\})", "");
+        }
+
+        return true;
     }
 }
