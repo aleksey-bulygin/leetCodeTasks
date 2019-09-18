@@ -11,7 +11,6 @@ public class Taxi implements Runnable {
 
     @Override
     public synchronized void run() {
-        //List<taxi.Client> clients = new ArrayList<>();
         while (true) {
             Client client = callCenter.takeOrder(target);
 
@@ -26,17 +25,6 @@ public class Taxi implements Runnable {
             } else
                 break;
         }
-        //while (true) {
-          //  try {
-            //    taxi.Client client = callCenter.takeOrder(this.target);
-              //  if (client != null) {
-//
-  ///                  Thread.sleep(3000);
-     //               System.out.println(client + " " + client.getTarget() + " " + client.getMessage());
-       //         }
-         //   } catch (InterruptedException e) {
-           //     e.printStackTrace();
-            //}
-        }
     }
+}
 

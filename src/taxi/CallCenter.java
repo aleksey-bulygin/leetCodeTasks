@@ -8,16 +8,12 @@ public class CallCenter {
     private int clientCounter = 0;
     private List<Client> clients;
 
-
-
     public CallCenter(){
         clients = new ArrayList<>();
     }
 
     public synchronized boolean takeCall(Client client) {
-      //  try {
             if (clientCounter < N) {
-    //            notifyAll();
                 client.setPhone("phone :" + clientCounter);
                 clientCounter++;
 
@@ -27,17 +23,12 @@ public class CallCenter {
 
             } else {
                 System.out.println("Не хватает места");
-           //      wait();
                 return false;
             }
-   //     } catch (InterruptedException e) {
-   //        e.printStackTrace();
-   //    }
         return true;
     }
 
     public synchronized Client takeOrder(int target) {
-    //   try {
             if (clientCounter > 0) {
                notifyAll();
                 for (Client client : clients) {
@@ -49,11 +40,6 @@ public class CallCenter {
                     }
                 }
             }
-
-         //  wait();
-    //  } catch (InterruptedException e) {
-    //      e.printStackTrace();
-    //   }
 
         return null;
     }
