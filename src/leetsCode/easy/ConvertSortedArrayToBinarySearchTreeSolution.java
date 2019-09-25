@@ -25,42 +25,26 @@ import java.util.stream.Collectors;
  */
 public class ConvertSortedArrayToBinarySearchTreeSolution {
     public static void main(String[] args) {
-        int[] array = new int[]{-10, -3, 0, 5, 9};
+        int[] array = new int[]{0, 1, 2, 3, 4, 5};
         TreeNode bstTree = sortedArrayToBST(array);
     }
 
     public static TreeNode sortedArrayToBST(int[] nums) {
-        ArrayList<Integer> numsList = (ArrayList<Integer>) Arrays.stream(nums).boxed().collect(Collectors.toList());
-        int mid = 0;
-
-        if (numsList.size() % 2 == 0)
-            mid = numsList.size() / 2;
-        else
-            mid = (numsList.size() - 1) / 2;
-        
-        TreeNode bstRoot = new TreeNode(numsList.get(mid));
-        bstRoot.left = new TreeNode(numsList.get(mid - 1));
-        bstRoot.right = new TreeNode(numsList.get(numsList.size() - 1));
-
-        initBSTTree(bstRoot.left, bstRoot.right,
-                    new ArrayList<Integer>(numsList.subList(0, mid - 1)),
-                    new ArrayList<Integer>(numsList.subList(mid + 1, numsList.size() - 1)));
-
-        return bstRoot;
+        return initBST(nums, 0, nums.length - 1);
     }
 
-    private static void initBSTTree(TreeNode left, TreeNode right,
-                                    ArrayList<Integer> leftNums, ArrayList<Integer> rightNums) {
-        if (!leftNums.isEmpty())
-            left.left = new TreeNode(leftNums.get(leftNums.size() - 1));
-        if (!rightNums.isEmpty())
-            right.left = new TreeNode(rightNums.get(0));
+    private static TreeNode initBST(int[] nums, int start, int end) {
+        if (start > end)
+            return null;
+        if (start == end)
+            return new TreeNode(nums[end]);
 
-        if (leftNums.isEmpty() && rightNums.isEmpty())
-            return;
+        int mid = start + (end - start) / 2;
+        TreeNode root = new TreeNode(nums[mid]);
+        root.left = initBST(nums, start, mid - 1);
+        root.right = initBST(nums, mid + 1, end);
 
-        initBSTTree(left, right,
-                new ArrayList<>(leftNums.subList(1, leftNums.size())),
-                new ArrayList<>(rightNums.subList(0, rightNums.size() - 1)));
+        return root;
     }
+
 }
