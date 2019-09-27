@@ -1,8 +1,8 @@
 package korman;
 
-public class Example211 {
+public class InsertionSortExample {
     public static void main(String[] args) {
-        int[] arr = new Example211().insertionSort(new int[]{31, 41, 59, 26, 41, 58});
+        int[] arr = new InsertionSortExample().insertionSort(new int[]{31, 41, 59, 26, 41, 58});
         for (int x : arr)
             System.out.print(x + " ");
     }
