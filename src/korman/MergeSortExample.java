@@ -3,44 +3,54 @@ package korman;
 public class MergeSortExample {
     public static void main(String[] args) {
         int[] array = new int[]{3, 41, 52, 26, 38, 57, 9, 49};
-        new MergeSortExample().mergeSort(array, 1, array.length);
+        array = new MergeSortExample().mergeSort(array);
 
         for (int x : array)
             System.out.print(x + " ");
     }
 
-    public void merge(int[] array, int p, int q, int r) {
-        int n1 = q - p + 1;
-        int n2 = r - q;
-        int[] L = new int[n1];
-        int[] R = new int[n2];
+    public int[] merge(int[] left, int[] right) {
+        int leftPoint = 0,
+            rightPoint = 0,
+            resultPoint = 0;
 
-        for (int i = 0; i < n1 - 1; i++)
-            L[i] = array[p + i - 1];
-        for (int i = 0; i < n2 - 1; i++)
-            R[i] = array[q + i];
-        L[n1 - 1] = Integer.MAX_VALUE;
-        R[n2 - 1] = Integer.MAX_VALUE;
+        int[] result = new int[left.length + right.length];
 
-        int i = 0;
-        int j = 0;
-        for (int k = p; k < r; k++) {
-            if (L[i] <= R[j]) {
-                array[k] = L[i];
-                i++;
-            } else {
-                array[k] = R[j];
-                j++;
-            }
+        while (leftPoint < left.length || rightPoint < right.length) {
+
+            if (leftPoint < left.length && rightPoint < right.length) {
+                if (left[leftPoint] < right[rightPoint])
+                    result[resultPoint++] = left[leftPoint++];
+                else
+                    result[resultPoint++] = right[rightPoint++];
+
+            } else if (leftPoint < left.length)
+                result[resultPoint++] = left[leftPoint++];
+            else if (rightPoint < right.length)
+                result[resultPoint++] = right[rightPoint++];
         }
+
+        return result;
     }
 
-    public void mergeSort(int[] array, int p, int r) {
-        if (p < r) {
-            int q = (p + r) / 2;
-            mergeSort(array, p, q);
-            mergeSort(array, q + 1, r);
-            merge(array, p, q, r);
-        }
+    public int[] mergeSort(int[] array) {
+        if (array.length < 2)
+            return array;
+
+        final int mid = array.length / 2;
+
+        int[] left = new int[mid];
+        int[] right = new int[array.length % 2 == 0? mid : mid + 1];
+
+        for (int i = 0; i < left.length; i++)
+            left[i] = array[i];
+
+        for (int j = 0; j < right.length; j++)
+            right[j] = array[mid + j];
+
+        left = mergeSort(left);
+        right = mergeSort(right);
+
+        return merge(left, right);
     }
 }
