@@ -1,5 +1,7 @@
 package leetsCode.easy;
 
+import java.util.Objects;
+
 /**
  * Merge two sorted linked lists and return it as a new list.
  * The new list should be made by splicing together the nodes of the first two lists.
@@ -110,5 +112,20 @@ class ListNode {
 
     ListNode(int x) {
         val = x;
+        next = null;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ListNode listNode = (ListNode) o;
+        return val == listNode.val &&
+                Objects.equals(next, listNode.next);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(val, next);
     }
 }
